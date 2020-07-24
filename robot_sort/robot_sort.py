@@ -81,11 +81,13 @@ class SortingRobot:
         Turn on the robot's light
         """
         self._light = "ON"
+
     def set_light_off(self):
         """
         Turn off the robot's light
         """
         self._light = "OFF"
+
     def light_is_on(self):
         """
         Returns True if the robot's light is on and False otherwise.
@@ -96,12 +98,14 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Planning stage:
-        # Will implement a sorting solution inspired by bubble sort,
-        # in which the robot will compare each number as it 'iterates'
-        # through them to the right, to the number it is holding, and will
-        # send the highest numbers to the right, and iterate through until no
-        # more swaps have happened (this is what the light will be used for)
+        # Second implementation plan:
+        # version of a selection sort: finding the smallest value
+        # pick up first card
+        # check it against every card to the right to see if it's lower
+        # if it's higher, swap. if it's lower, keep
+        # once you get to the far right, confirm the card is still lower
+        # then go back left until you reach the None card
+        # swap cards, move one to the right, and do the same
 
         # turn light on to trigger while loop
         self.set_light_on()
@@ -110,13 +114,18 @@ class SortingRobot:
         while self.light_is_on():
             # turn light off to restart tracking of swaps
             self.set_light_off()
-            # pick up first item & move to next item to compare
+            # pick up first item
             self.swap_item()
+            # move to next item to compare
             self.move_right()
             # begin another while loop while robot can move right
             while self.can_move_right():
-                # check if value in list is greater than value holding
-                if self.compare_item() == -1:
+                # if robot holding None, swap numbers
+                if self.compare_item() is None:
+                    self.swap_item()
+                    self.move_right
+                # check if value in list is less than value holding
+                if self.compare_item() == 1:
                     # if so, swap
                     self.swap_item()
                     # and turn on light
@@ -124,48 +133,14 @@ class SortingRobot:
                 # move right with or without swap
                 self.move_right()
             # check final card
-            if self.compare_item() == -1:
+            if self.compare_item() == 1:
                 self.swap_item()
                 self.set_light_on()
-            # move back left
+            # move back left until None card is reached
             while self.can_move_left():
                 self.move_left()
-            # replace card at beginning
-            
-
-        # previous failed iteration
-       # turn light on to trigger while loop
-       # self.set_light_on()
-
-        # pick up initial item
-        # self.swap_item()
-
-        # # begin while loop
-        # while self.light_is_on():
-        #     # turn light off to restart tracking of swaps
-        #     self.set_light_off()
-        #     # pick up first item & move to next item to compare
-        #     self.move_right()
-        #     # begin another while loop while robot can move right
-        #     while self.can_move_right():
-        #         # check if value in list is greater than value holding
-        #         if self.compare_item() == -1:
-        #             # if so, swap
-        #             self.swap_item()
-        #             # and turn on light
-        #             self.set_light_on()
-        #         # move right with or without swap
-        #         self.move_right()
-        #     # check final card
-        #     if self.compare_item() == -1:
-        #             self.swap_item()
-        #             self.set_light_on()
-        #     # move back left
-        #     while self.can_move_left():
-        #         self.move_left()
-        #     # replace card at beginning
-
-
+                if self.compare_item() is None:
+                    break
 
 
 if __name__ == "__main__":
