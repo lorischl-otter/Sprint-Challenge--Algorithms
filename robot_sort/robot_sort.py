@@ -96,8 +96,76 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # Planning stage:
+        # Will implement a sorting solution inspired by bubble sort,
+        # in which the robot will compare each number as it 'iterates'
+        # through them to the right, to the number it is holding, and will
+        # send the highest numbers to the right, and iterate through until no
+        # more swaps have happened (this is what the light will be used for)
+
+        # turn light on to trigger while loop
+        self.set_light_on()
+
+        # begin while loop
+        while self.light_is_on():
+            # turn light off to restart tracking of swaps
+            self.set_light_off()
+            # pick up first item & move to next item to compare
+            self.swap_item()
+            self.move_right()
+            # begin another while loop while robot can move right
+            while self.can_move_right():
+                # check if value in list is greater than value holding
+                if self.compare_item() == -1:
+                    # if so, swap
+                    self.swap_item()
+                    # and turn on light
+                    self.set_light_on()
+                # move right with or without swap
+                self.move_right()
+            # check final card
+            if self.compare_item() == -1:
+                self.swap_item()
+                self.set_light_on()
+            # move back left
+            while self.can_move_left():
+                self.move_left()
+            # replace card at beginning
+            
+
+        # previous failed iteration
+       # turn light on to trigger while loop
+       # self.set_light_on()
+
+        # pick up initial item
+        # self.swap_item()
+
+        # # begin while loop
+        # while self.light_is_on():
+        #     # turn light off to restart tracking of swaps
+        #     self.set_light_off()
+        #     # pick up first item & move to next item to compare
+        #     self.move_right()
+        #     # begin another while loop while robot can move right
+        #     while self.can_move_right():
+        #         # check if value in list is greater than value holding
+        #         if self.compare_item() == -1:
+        #             # if so, swap
+        #             self.swap_item()
+        #             # and turn on light
+        #             self.set_light_on()
+        #         # move right with or without swap
+        #         self.move_right()
+        #     # check final card
+        #     if self.compare_item() == -1:
+        #             self.swap_item()
+        #             self.set_light_on()
+        #     # move back left
+        #     while self.can_move_left():
+        #         self.move_left()
+        #     # replace card at beginning
+
+
 
 
 if __name__ == "__main__":
